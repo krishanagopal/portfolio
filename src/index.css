@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-main: #0A0A0C;
+  --bg-sidebar: #121215;
+  --bg-card: #18181C;
+  --bg-card-hover: #24242C;
+  --border-subtle: rgba(250, 204, 21, 0.15);
+  --border-strong: rgba(250, 204, 21, 0.35);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D4D4D8;
+  --text-muted: #A1A1AA;
+  --accent-red: #FACC15;
+  --accent-red-hover: #EAB308;
+  --accent-amber: #F59E0B;
+  --accent-yellow: #FACC15;
+  --accent-yellow-hover: #EAB308;
+  --accent-yellow-text: #000000;
+  --accent-sand: #FACC15;
+  --accent-yellow-bg: rgba(250, 204, 21, 0.15);
+  --accent-yellow-border: rgba(250, 204, 21, 0.4);
+  --accent-green: #22c55e;
+  --accent-green-bg: rgba(34, 197, 94, 0.16);
+  --accent-green-border: rgba(34, 197, 94, 0.45);
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Playfair Display', 'Instrument Serif', Georgia, serif;
+  color-scheme: dark;
+}
+
+.dark {
+  --bg-main: #0A0A0C;
+  --bg-sidebar: #121215;
+  --bg-card: #18181C;
+  --bg-card-hover: #24242C;
+  --border-subtle: rgba(250, 204, 21, 0.15);
+  --border-strong: rgba(250, 204, 21, 0.35);
+  --text-primary: #FFFFFF;
+  --text-secondary: #D4D4D8;
+  --text-muted: #A1A1AA;
+  --accent-red: #FACC15;
+  --accent-red-hover: #EAB308;
+  --accent-amber: #F59E0B;
+  --accent-yellow: #FACC15;
+  --accent-yellow-hover: #EAB308;
+  --accent-yellow-text: #000000;
+  --accent-sand: #FACC15;
+  --accent-yellow-bg: rgba(250, 204, 21, 0.15);
+  --accent-yellow-border: rgba(250, 204, 21, 0.4);
+  color-scheme: dark;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111114;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a32;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3e4a;
+}
