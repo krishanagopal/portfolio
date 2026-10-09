@@ -1,0 +1,52 @@
+.falling-text-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.falling-text-target {
+  display: inline-block;
+  width: 100%;
+}
+
+.falling-text-target .word {
+  display: inline-block;
+  margin: 0 4px;
+  user-select: none;
+  cursor: grab;
+  transition: color 0.2s ease;
+}
+
+.falling-text-target .word:active {
+  cursor: grabbing;
+}
+
+.highlighted {
+  color: #fae88a;
+  font-weight: bold;
+}
+
+.falling-text-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Physics item styling when children are used */
+.falling-item {
+  display: inline-flex;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.falling-item:active {
+  cursor: grabbing;
+}
