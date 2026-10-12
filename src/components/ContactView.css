@@ -1,0 +1,79 @@
+/* Editorial Minimal Contact Page */
+
+.contact-editorial-view {
+  background-color: #EAB308;
+  color: #1C1917;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Top row positioned with clean 30-40px gap from top */
+.contact-top-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 34px;
+  z-index: 30;
+}
+
+/* Giant Editorial Typography directly behind the ID card */
+.contact-giant-typography-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: -0.12em; /* Crops bottom curve of letters matching reference */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.contact-giant-name {
+  font-family: 'Playfair Display', 'Instrument Serif', Georgia, serif;
+  font-size: clamp(4rem, 14.5vw, 14.5rem);
+  max-width: calc(100vw - 10px);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: #000000;
+  opacity: 1;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0 5px;
+  box-sizing: border-box;
+  text-align: center;
+  transform: translateY(2%);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .contact-top-row {
+    padding-top: 24px;
+  }
+  .contact-giant-name {
+    font-size: clamp(2.6rem, 14vw, 5.6rem);
+    transform: translateY(1%);
+  }
+  .contact-giant-typography-wrapper {
+    margin-bottom: -0.06em;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.contact-sound-btn {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
