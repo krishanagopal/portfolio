@@ -1,0 +1,168 @@
+/* Cosmic Orbit Theme Toggle Button & Radial Ripple Animation */
+
+.cosmic-toggle-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 204, 21, 0.25);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  outline: none;
+  overflow: visible;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  z-index: 40;
+}
+
+.dark .cosmic-toggle-btn {
+  background: rgba(24, 24, 28, 0.85);
+  border-color: rgba(250, 204, 21, 0.4);
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.25);
+}
+
+.cosmic-toggle-btn:hover {
+  transform: scale(1.1) rotate(6deg);
+  border-color: rgba(250, 204, 21, 0.7);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+}
+
+.cosmic-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* SVG Orbit Container */
+.cosmic-icon-wrapper {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cosmic-toggle-btn.is-dark .cosmic-icon-wrapper {
+  transform: rotate(360deg);
+}
+
+/* Sun Rays & Moon Path Transformations */
+.cosmic-sun-center {
+  transition: r 0.4s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s ease;
+  fill: #D97724;
+}
+
+.dark .cosmic-sun-center {
+  fill: #FACC15;
+}
+
+.cosmic-sun-rays {
+  transform-origin: center;
+  transition: transform 0.5s ease, opacity 0.4s ease, stroke 0.3s ease;
+  stroke: #D97724;
+}
+
+.dark .cosmic-sun-rays {
+  stroke: #FACC15;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.cosmic-moon-mask-circle {
+  transition: cx 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), cy 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cx: 24;
+  cy: 10;
+}
+
+.dark .cosmic-moon-mask-circle {
+  cx: 15;
+  cy: 9;
+}
+
+/* Orbiting Stardust Particles */
+.cosmic-stardust-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cosmic-toggle-btn.is-dark .cosmic-stardust-ring {
+  opacity: 1;
+  animation: cosmic-orbit-spin 10s linear infinite;
+}
+
+.cosmic-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #FACC15;
+  box-shadow: 0 0 6px #FACC15;
+  animation: cosmic-particle-pulse 2s ease-in-out infinite alternate;
+}
+
+.cosmic-particle:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
+.cosmic-particle:nth-child(2) { top: 50%; right: 0; animation-delay: 0.4s; }
+.cosmic-particle:nth-child(3) { bottom: 0; left: 50%; animation-delay: 0.8s; }
+.cosmic-particle:nth-child(4) { top: 50%; left: 0; animation-delay: 1.2s; }
+
+@keyframes cosmic-orbit-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cosmic-particle-pulse {
+  0% { transform: scale(0.6); opacity: 0.4; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Radial Ripple Overlay across screen */
+.cosmic-ripple-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.cosmic-ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: cosmic-ripple-expand 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cosmic-ripple-circle.to-dark {
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.45) 0%, rgba(10, 10, 12, 0.95) 50%, #0A0A0C 100%);
+  box-shadow: 0 0 60px rgba(250, 204, 21, 0.6);
+}
+
+.cosmic-ripple-circle.to-light {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(246, 244, 238, 0.95) 60%, #F6F4EE 100%);
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes cosmic-ripple-expand {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.9;
+  }
+  100% {
+    width: 320vmax;
+    height: 320vmax;
+    opacity: 0;
+  }
+}
