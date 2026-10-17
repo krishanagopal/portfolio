@@ -63,7 +63,7 @@ export default function HomeHero({ setActiveTab }) {
                 specks={15}
                 fontFamily="'Playfair Display', 'Instrument Serif', Georgia, serif"
                 color="#FFFFFF"
-                accentColor="#C83737"
+                accentColor="#FACC15"
 
                 letterSpacing={-0.035}
                 reach={180}

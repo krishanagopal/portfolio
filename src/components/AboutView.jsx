@@ -25,7 +25,7 @@ export default function AboutView() {
               <span>
                 I'm a{' '}
                 <AsciiGlitchRipple as="strong" className="about-highlight">
-                  Design Engineer
+                  Web Developer
                 </AsciiGlitchRipple>{' '}
                 &amp;{' '}
                 <AsciiGlitchRipple as="strong" className="about-highlight">
