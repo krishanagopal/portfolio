@@ -259,12 +259,18 @@ export function CursorDrivenParticleTypography({
       mouseY = -1000;
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.touches[0].clientX - rect.left;
+      mouseY = e.touches[0].clientY - rect.top;
+    };
+
     const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = e.touches[0].clientX - rect.left;
-        mouseY = e.touches[0].clientY - rect.top;
-      }
+      if (!e.touches || e.touches.length === 0) return;
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.touches[0].clientX - rect.left;
+      mouseY = e.touches[0].clientY - rect.top;
     };
 
     const handleTouchEnd = () => {
@@ -288,14 +294,16 @@ export function CursorDrivenParticleTypography({
 
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("touchstart", handleTouchStart, { passive: true });
     canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
-    canvas.addEventListener("touchend", handleTouchEnd);
+    canvas.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       clearTimeout(timeoutId);
       resizeObserver.disconnect();
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
+      canvas.removeEventListener("touchstart", handleTouchStart);
       canvas.removeEventListener("touchmove", handleTouchMove);
       canvas.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(animationFrameId);
@@ -319,7 +327,7 @@ export function CursorDrivenParticleTypography({
     <div
       ref={containerRef}
       className={cn(
-        "w-full flex items-center relative touch-none select-none",
+        "w-full flex items-center relative touch-pan-y select-none",
         !hasExplicitHeight && "h-full min-h-[400px]",
         align === "left" ? "justify-start" : align === "right" ? "justify-end" : "justify-center",
         className

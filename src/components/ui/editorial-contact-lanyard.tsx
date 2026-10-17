@@ -50,7 +50,7 @@ const CSS = `
 
 .ecl-card {
   position: absolute;
-  width: clamp(225px, 64vw, 260px);
+  width: clamp(210px, 62vw, 260px);
   aspect-ratio: 260 / 335;
   perspective: 1400px;
   cursor: grab;
@@ -312,7 +312,7 @@ export function EditorialContactLanyard({
   githubUrl = "https://github.com/krishanagopal",
   linkedinUrl = "https://www.linkedin.com/in/krishana-gopal-97a73b392/",
   resumeUrl = "/Krishana_Gopal_Resume.pdf",
-  location = "Gurugram, India",
+  location = "UIET Hoshiarpur, Punjab",
   ropeLength = 150,
   anchorX = "50%",
   anchorY = 0,
@@ -468,8 +468,9 @@ export function EditorialContactLanyard({
         const ny = tx / len;
 
         const t = i / (n - 1);
-        // Wide V-shape from the very top edge (70px each side), tapering down to 3.5px at the clasp
-        const spread = 70 * (1 - t * 0.95);
+        // Responsive V-shape from top edge, tapering down to 3.5px at the clasp
+        const maxSpread = Math.min((canvas?.width || 800) * 0.15, 70);
+        const spread = maxSpread * (1 - t * 0.95);
 
         leftPts.push({ x: p.x - nx * spread, y: p.y - ny * spread });
         rightPts.push({ x: p.x + nx * spread, y: p.y + ny * spread });

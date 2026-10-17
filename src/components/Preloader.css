@@ -133,6 +133,28 @@
   filter: none;
 }
 
+@media (max-width: 640px) {
+  .crowd-preloader-center {
+    top: calc(14% + 40px);
+    padding: 0 0.5rem;
+  }
+  .crowd-preloader-title {
+    font-size: clamp(2.2rem, 15.5vw, 6rem);
+    max-width: 95vw;
+  }
+  .crowd-preloader-enter-btn-top {
+    padding: 0.5rem 1.05rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 380px) {
+  .crowd-preloader-title {
+    font-size: clamp(1.9rem, 14.5vw, 4.5rem);
+  }
+}
+
 /* Canvas stage: in foreground above the yellow text */
 .crowd-preloader-canvas-container {
   position: absolute;

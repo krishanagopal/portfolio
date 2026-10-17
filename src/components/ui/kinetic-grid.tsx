@@ -411,8 +411,41 @@ export default function KineticGrid({
       }
     };
 
+    const onTouchMove = (e: TouchEvent) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      targetMouseRef.current = {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+      };
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      targetMouseRef.current = { x, y };
+      ripplesRef.current.push({
+        x,
+        y,
+        radius: 0,
+        opacity: 1,
+        born: performance.now(),
+      });
+    };
+
+    const onTouchEnd = () => {
+      targetMouseRef.current = { x: -9999, y: -9999 };
+    };
+
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("click", onClick);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
@@ -420,6 +453,9 @@ export default function KineticGrid({
       resizeObserver.disconnect();
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("click", onClick);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }

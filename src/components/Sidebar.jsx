@@ -18,7 +18,7 @@ export default function Sidebar({ activeTab, setActiveTab, isMobileOpen, setIsMo
       const hours = String(istDate.getHours()).padStart(2, '0');
       const minutes = String(istDate.getMinutes()).padStart(2, '0');
       const seconds = String(istDate.getSeconds()).padStart(2, '0');
-      setIstTime(`${hours}:${minutes}:${seconds} IST Gurugram`);
+      setIstTime(`${hours}:${minutes}:${seconds} IST UIET Hoshiarpur`);
     };
 
     updateTime();
@@ -96,7 +96,7 @@ export default function Sidebar({ activeTab, setActiveTab, isMobileOpen, setIsMo
             {/* Live Clock & City */}
             <div className="live-clock-badge">
               <span className="clock-dot"></span>
-              <span className="clock-text">{istTime || '17:24:39 IST Gurugram'}</span>
+              <span className="clock-text">{istTime || '17:24:39 IST UIET Hoshiarpur'}</span>
             </div>
           </div>
 

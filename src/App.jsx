@@ -101,7 +101,7 @@ export default function App() {
         {/* Mobile Top Header */}
         <header className="mobile-header">
           <div className="mobile-brand">
-            <img src="/avatar.jpg" alt="Krishana Gopal" className="mobile-avatar" />
+            <img src="/sculpture.jpg" alt="Krishana Gopal" className="mobile-avatar" />
             <div>
               <div className="mobile-name">Krishana Gopal</div>
               <div className="mobile-role">Web Developer</div>

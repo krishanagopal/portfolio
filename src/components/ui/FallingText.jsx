@@ -276,6 +276,53 @@ const FallingText = forwardRef(({
     Runner.run(runner, engine);
     Render.run(render);
 
+    const touchCleanupList = [];
+    bodies.forEach(({ elem }) => {
+      elem.style.touchAction = 'none';
+
+      const onTouchStartItem = (e) => {
+        if (!e.touches || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const bRect = boundary.getBoundingClientRect();
+        mouse.position.x = touch.clientX - bRect.left;
+        mouse.position.y = touch.clientY - bRect.top;
+        mouse.mousedown(touch);
+        pointerStartRef.current = { x: touch.clientX, y: touch.clientY };
+        dragDistRef.current = 0;
+      };
+
+      const onTouchMoveItem = (e) => {
+        if (!e.touches || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const bRect = boundary.getBoundingClientRect();
+        mouse.position.x = touch.clientX - bRect.left;
+        mouse.position.y = touch.clientY - bRect.top;
+        mouse.mousemove(touch);
+        const dx = touch.clientX - pointerStartRef.current.x;
+        const dy = touch.clientY - pointerStartRef.current.y;
+        dragDistRef.current = Math.hypot(dx, dy);
+        if (mouseConstraint.body) {
+          e.preventDefault();
+        }
+      };
+
+      const onTouchEndItem = (e) => {
+        mouse.mouseup(e);
+      };
+
+      elem.addEventListener('touchstart', onTouchStartItem, { passive: false });
+      elem.addEventListener('touchmove', onTouchMoveItem, { passive: false });
+      elem.addEventListener('touchend', onTouchEndItem, { passive: true });
+      elem.addEventListener('touchcancel', onTouchEndItem, { passive: true });
+
+      touchCleanupList.push(() => {
+        elem.removeEventListener('touchstart', onTouchStartItem);
+        elem.removeEventListener('touchmove', onTouchMoveItem);
+        elem.removeEventListener('touchend', onTouchEndItem);
+        elem.removeEventListener('touchcancel', onTouchEndItem);
+      });
+    });
+
     const updateLoop = () => {
       bodies.forEach(({ body, elem }) => {
         const { x, y } = body.position;
@@ -289,6 +336,7 @@ const FallingText = forwardRef(({
 
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      touchCleanupList.forEach((fn) => fn());
       Render.stop(render);
       Runner.stop(runner);
       if (render.canvas && canvasContainerRef.current) {
@@ -344,6 +392,7 @@ const FallingText = forwardRef(({
         className={`falling-text-container ${className}`}
         onClick={trigger === 'click' ? handleTrigger : undefined}
         onMouseEnter={trigger === 'hover' ? handleTrigger : undefined}
+        onTouchStart={trigger === 'hover' ? handleTrigger : undefined}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onClickCapture={onClickCapture}

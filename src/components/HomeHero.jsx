@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MapPin, ArrowUpRight, FileText, Eye } from 'lucide-react';
 import TechText from './TechText';
 import { CursorDrivenParticleTypography } from './ui/cursor-driven-particles-typography';
@@ -7,8 +7,30 @@ import FallingText from './ui/FallingText';
 export default function HomeHero({ setActiveTab }) {
   const [pulseSpeed, setPulseSpeed] = useState(1);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [techFontSize, setTechFontSize] = useState(75);
+  const [isMobile, setIsMobile] = useState(false);
   const heroRef = useRef(null);
   const fallingTextRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      const mobile = w <= 768;
+      setIsMobile(mobile);
+      if (w < 440) {
+        setTechFontSize(40);
+      } else if (w < 640) {
+        setTechFontSize(50);
+      } else if (w < 1024) {
+        setTechFontSize(62);
+      } else {
+        setTechFontSize(75);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleKineticReset = () => {
     setIsSpinning(true);
@@ -34,7 +56,7 @@ export default function HomeHero({ setActiveTab }) {
               <TechText
                 text="Hi, there"
                 fontWeight={800}
-                fontSize={75}
+                fontSize={techFontSize}
                 reveal="letter"
                 dashLength={4}
                 dashGap={2}
@@ -54,7 +76,7 @@ export default function HomeHero({ setActiveTab }) {
                 draggable
                 sweep
                 align="left"
-                padLeft={6}
+                padLeft={4}
               />
             </div>
             <h2 className="headline-line outlined">I engineer web apps</h2>
@@ -66,7 +88,7 @@ export default function HomeHero({ setActiveTab }) {
                 fontSize={54}
                 lineGap={1.22}
                 align="left"
-                color="#C83737"
+                color="#FFFFFF"
                 particleSize={1.5}
                 particleDensity={4}
                 dispersionStrength={16}
@@ -79,11 +101,11 @@ export default function HomeHero({ setActiveTab }) {
           {/* Location Badge */}
           <div className="hero-location">
             <MapPin size={18} className="location-pin-icon" />
-            <span>Gurugram, India</span>
+            <span>UIET Hoshiarpur, Punjab</span>
           </div>
 
 
-          {/* Call to action pills with Matter.js physics falling effect across the full first page */}
+          {/* Call to action pills with Matter.js physics falling effect enabled across all screen sizes */}
           <FallingText
             ref={fallingTextRef}
             boundaryRef={heroRef}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EditorialContactLanyard } from './ui/editorial-contact-lanyard';
 import WaveGridBackground from './ui/wave-grid-background';
 import { Volume2, VolumeX } from 'lucide-react';
@@ -6,6 +6,22 @@ import './ContactView.css';
 
 export default function ContactView() {
   const [isMuted, setIsMuted] = useState(true);
+  const [ropeLength, setRopeLength] = useState(180);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const h = window.innerHeight;
+      const w = window.innerWidth;
+      if (h < 720 || w < 500) {
+        setRopeLength(135);
+      } else {
+        setRopeLength(180);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="contact-editorial-view relative w-full h-full min-h-screen text-black overflow-hidden select-none">
@@ -35,18 +51,18 @@ export default function ContactView() {
         githubUrl="https://github.com/krishanagopal"
         linkedinUrl="https://www.linkedin.com/in/krishana-gopal-97a73b392/"
         resumeUrl="/Krishana_Gopal_Resume.pdf"
-        location="Gurugram, India"
+        location="UIET Hoshiarpur, Punjab"
         anchorX="50%"
         anchorY={-5}
-        ropeLength={180}
+        ropeLength={ropeLength}
         stagePosition="absolute"
       />
 
-      {/* Top Editorial Meta Row: 30-40px gap from top */}
-      <div className="contact-top-row absolute top-0 left-0 right-0 z-30 w-full px-7 sm:px-10 md:px-14 pt-[34px] flex items-start justify-between pointer-events-none">
+      {/* Top Editorial Meta Row */}
+      <div className="contact-top-row absolute top-0 left-0 right-0 z-30 w-full px-4 sm:px-10 md:px-14 pt-3.5 sm:pt-[34px] flex items-start justify-between pointer-events-none">
         {/* Top Left Quote / Subtitle */}
-        <div className="contact-top-left max-w-[280px] sm:max-w-[320px] pointer-events-auto">
-          <p className="text-[11.5px] sm:text-[12.5px] font-mono leading-relaxed text-[#1C1917]/80 font-medium">
+        <div className="contact-top-left max-w-[130px] sm:max-w-[320px] pointer-events-auto">
+          <p className="text-[10px] sm:text-[12.5px] font-mono leading-tight sm:leading-relaxed text-[#1C1917]/85 font-medium">
             I engineer web products and the stories behind them{' '}
             <span className="inline-block text-[#1C1917]/45 font-sans font-bold ml-0.5">
               [→]
@@ -55,10 +71,10 @@ export default function ContactView() {
         </div>
 
         {/* Top Right Current Status */}
-        <div className="contact-top-right text-right max-w-[280px] sm:max-w-[340px] pointer-events-auto">
-          <p className="text-[11px] sm:text-[12px] font-mono leading-relaxed text-[#1C1917]/75 font-medium">
-            Currently based in Gurugram, India.<br />
-            Open for Engineering Roles & Collaborations.
+        <div className="contact-top-right text-right max-w-[145px] sm:max-w-[340px] pointer-events-auto">
+          <p className="text-[9.5px] sm:text-[12px] font-mono leading-tight sm:leading-relaxed text-[#1C1917]/80 font-medium">
+            Currently based in UIET Hoshiarpur, Punjab.<br />
+            Open for Engineering Roles.
           </p>
         </div>
       </div>
