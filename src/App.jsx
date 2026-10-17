@@ -14,6 +14,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('homepage');
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const lastScrollYRef = useRef(0);
   const layoutRef = useRef(null);
 
   // Permanently maintain dark theme
@@ -69,6 +71,55 @@ export default function App() {
     };
   }, []);
 
+  // Hide mobile navbar on scroll down, reveal on scroll up
+  useEffect(() => {
+    const getScrollTop = () => {
+      const container = layoutRef.current;
+      const containerScroll = container ? container.scrollTop : 0;
+      const windowScroll = window.scrollY || document.documentElement.scrollTop || 0;
+      return Math.max(containerScroll, windowScroll);
+    };
+
+    let ticking = false;
+
+    const handleMobileNavScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentY = getScrollTop();
+          const diff = currentY - lastScrollYRef.current;
+
+          // Always visible at the very top
+          if (currentY <= 30) {
+            setIsHeaderHidden(false);
+          } else if (diff > 6) {
+            // Scrolling down -> hide navbar
+            setIsHeaderHidden(true);
+          } else if (diff < -6) {
+            // Scrolling up -> show navbar
+            setIsHeaderHidden(false);
+          }
+
+          lastScrollYRef.current = currentY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    const container = layoutRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleMobileNavScroll, { passive: true });
+    }
+    window.addEventListener('scroll', handleMobileNavScroll, { passive: true });
+
+    return () => {
+      if (container) {
+        container.removeEventListener('scroll', handleMobileNavScroll);
+      }
+      window.removeEventListener('scroll', handleMobileNavScroll);
+    };
+  }, []);
+
   return (
     <>
       {isLoading && (
@@ -99,7 +150,7 @@ export default function App() {
 
       <div ref={layoutRef} className="portfolio-app-layout">
         {/* Mobile Top Header */}
-        <header className="mobile-header">
+        <header className={`mobile-header ${isHeaderHidden && !isMobileOpen ? 'hidden-on-scroll' : ''}`}>
           <div className="mobile-brand">
             <img src="/sculpture.jpg" alt="Krishana Gopal" className="mobile-avatar" />
             <div>
