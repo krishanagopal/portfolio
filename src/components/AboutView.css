@@ -215,13 +215,24 @@
   border-radius: 0;
   transition: all 0.2s ease;
   text-shadow: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.about-highlight:hover {
+.about-highlight:hover,
+.about-highlight:active {
   background: transparent;
   color: #000000;
   text-decoration-color: #000000;
   opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .about-highlight {
+    white-space: normal !important;
+    display: inline !important;
+    overflow: visible !important;
+  }
 }
 
 /* EXPERIENCE SECTION STYLING */

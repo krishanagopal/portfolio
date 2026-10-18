@@ -10,10 +10,9 @@ export default function ContactView() {
 
   useEffect(() => {
     const handleResize = () => {
-      const h = window.innerHeight;
       const w = window.innerWidth;
-      if (h < 720 || w < 500) {
-        setRopeLength(135);
+      if (w <= 768) {
+        setRopeLength(115);
       } else {
         setRopeLength(180);
       }
@@ -24,7 +23,7 @@ export default function ContactView() {
   }, []);
 
   return (
-    <div className="contact-editorial-view relative w-full h-full min-h-screen text-black overflow-hidden select-none">
+    <div className="contact-editorial-view relative w-full h-full min-h-[84dvh] md:min-h-screen text-black overflow-hidden select-none">
       {/* 3D Wave Grid Interactive Background */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <WaveGridBackground

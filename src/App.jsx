@@ -91,11 +91,11 @@ export default function App() {
           // Always visible at the very top
           if (currentY <= 30) {
             setIsHeaderHidden(false);
-          } else if (diff > 6) {
-            // Scrolling down -> hide navbar
+          } else if (diff > 8) {
+            // Scrolling down -> hide navbar smoothly
             setIsHeaderHidden(true);
-          } else if (diff < -6) {
-            // Scrolling up -> show navbar
+          } else if (diff < -10) {
+            // Scrolling up -> show navbar smoothly
             setIsHeaderHidden(false);
           }
 

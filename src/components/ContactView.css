@@ -58,16 +58,39 @@
   transition: transform 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .contact-editorial-view {
+    min-height: 84dvh !important;
+    height: 84dvh !important;
+    max-height: 84dvh !important;
+  }
+
+  .ecl-card {
+    width: clamp(195px, 60vw, 245px) !important;
+  }
+
+  .contact-giant-name {
+    font-size: clamp(2.8rem, 15.4vw, 5.9rem) !important;
+    max-width: none !important;
+  }
+}
+
 @media (max-width: 640px) {
+  .contact-editorial-view {
+    min-height: 84dvh !important;
+    height: 84dvh !important;
+    max-height: 84dvh !important;
+  }
   .contact-top-row {
     padding-top: 14px;
     padding-left: 14px;
     padding-right: 14px;
   }
   .contact-giant-name {
-    font-size: clamp(2.2rem, 13vw, 5.2rem);
+    font-size: clamp(2.8rem, 15.4vw, 5.9rem) !important;
     transform: translateY(1%);
     letter-spacing: -0.03em;
+    max-width: none !important;
   }
   .contact-giant-typography-wrapper {
     margin-bottom: -0.04em;
@@ -86,7 +109,8 @@
 
 @media (max-width: 380px) {
   .contact-giant-name {
-    font-size: clamp(1.95rem, 12vw, 3.8rem);
+    font-size: clamp(2.53rem, 14.75vw, 4.8rem) !important;
+    max-width: none !important;
   }
 }
 

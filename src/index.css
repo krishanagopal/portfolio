@@ -69,21 +69,61 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Custom Sleek Scrollbar */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+/* Custom Sleek Scrollbar - Desktop only */
+@media (min-width: 769px) {
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #111114;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a32;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3e3e4a;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #111114;
-}
+/* Mobile Devices: Completely remove scrollbar tracks for a borderless floating experience */
+@media (max-width: 768px) {
+  html,
+  body,
+  #root,
+  * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: #2a2a32;
-  border-radius: 4px;
-}
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar,
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  div::-webkit-scrollbar,
+  section::-webkit-scrollbar,
+  main::-webkit-scrollbar,
+  aside::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none !important;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3e3e4a;
+  ::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    display: none !important;
+  }
+
+  ::-webkit-scrollbar-track,
+  *::-webkit-scrollbar-track {
+    background: transparent !important;
+    display: none !important;
+  }
 }

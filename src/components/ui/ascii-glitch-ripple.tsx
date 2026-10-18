@@ -115,9 +115,18 @@ export function AsciiGlitchRipple({
     // Initialize content
     el.textContent = text;
 
-    const updateCursorPos = (e: MouseEvent) => {
+    const getClientX = (e: any): number | null => {
+      if (e.touches && e.touches.length > 0) return e.touches[0].clientX;
+      if (e.changedTouches && e.changedTouches.length > 0) return e.changedTouches[0].clientX;
+      if (typeof e.clientX === "number") return e.clientX;
+      return null;
+    };
+
+    const updateCursorPos = (e: any) => {
+      const clientX = getClientX(e);
+      if (clientX == null) return;
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const x = clientX - rect.left;
       const len = stateRef.current.origTxt.length;
       if (len === 0 || rect.width === 0) return;
       const pos = Math.round((x / rect.width) * len);
@@ -145,8 +154,13 @@ export function AsciiGlitchRipple({
     const start = () => {
       if (stateRef.current.isAnim) return;
 
-      // Lock current width and height strictly to prevent any layout shifts
-      if (stateRef.current.origW === null) {
+      const isMobileDevice =
+        typeof window !== "undefined" &&
+        (window.innerWidth <= 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+      // Lock current width and height strictly on desktop to prevent any layout shifts.
+      // On mobile viewports, keep fluid wrapping to avoid cutting off multi-line prose.
+      if (!isMobileDevice && stateRef.current.origW === null) {
         const rect = el.getBoundingClientRect();
         stateRef.current.origW = rect.width;
         stateRef.current.origH = rect.height;
@@ -182,10 +196,11 @@ export function AsciiGlitchRipple({
       stateRef.current.animId = requestAnimationFrame(animate);
     };
 
-    const startWave = () => {
+    const startWave = (pos?: number) => {
       if (stateRef.current.origTxt.length === 0) return;
+      const wavePos = typeof pos === "number" ? pos : stateRef.current.cursorPos;
       stateRef.current.waves.push({
-        startPos: stateRef.current.cursorPos,
+        startPos: wavePos,
         startTime: Date.now(),
         id: Math.random(),
       });
@@ -246,25 +261,113 @@ export function AsciiGlitchRipple({
       stateRef.current.isHover = false;
     };
 
+    // Mobile touch & pointer handlers for touch screens & mobile responsive mode
+    const handleTouchStart = (e: TouchEvent) => {
+      stateRef.current.isHover = true;
+      updateCursorPos(e);
+      startWave();
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      updateCursorPos(e);
+      startWave();
+    };
+
+    const handleTouchEnd = () => {
+      stateRef.current.isHover = false;
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      stateRef.current.isHover = true;
+      updateCursorPos(e);
+      startWave();
+    };
+
+    const handlePointerEnter = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") {
+        stateRef.current.isHover = true;
+        updateCursorPos(e);
+        startWave();
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      updateCursorPos(e);
+      startWave();
+    };
+
     el.addEventListener("mouseenter", handleEnter);
     el.addEventListener("mousemove", handleMove);
     el.addEventListener("mouseleave", handleLeave);
+
+    // Attach mobile touch and pointer events
+    el.addEventListener("touchstart", handleTouchStart, { passive: true });
+    el.addEventListener("touchmove", handleTouchMove, { passive: true });
+    el.addEventListener("touchend", handleTouchEnd, { passive: true });
+    el.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    el.addEventListener("pointerenter", handlePointerEnter, { passive: true });
+    el.addEventListener("click", handleClick);
+
+    // Mobile scroll / viewport auto-trigger:
+    // On mobile devices where hover doesn't exist, ripple automatically when scrolled into view
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.innerWidth <= 768 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+    let observer: IntersectionObserver | null = null;
+
+    if (isMobile && typeof IntersectionObserver !== "undefined") {
+      let lastTrigger = 0;
+      const scrollContainer = document.querySelector(".portfolio-app-layout");
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const now = Date.now();
+              if (now - lastTrigger > 2500) {
+                lastTrigger = now;
+                const delay = 80 + Math.random() * 220;
+                setTimeout(() => {
+                  if (el) {
+                    startWave(Math.floor(stateRef.current.origTxt.length / 2));
+                  }
+                }, delay);
+              }
+            }
+          });
+        },
+        {
+          root: scrollContainer || null,
+          threshold: 0.3,
+        }
+      );
+      observer.observe(el);
+    }
 
     return () => {
       el.removeEventListener("mouseenter", handleEnter);
       el.removeEventListener("mousemove", handleMove);
       el.removeEventListener("mouseleave", handleLeave);
+      el.removeEventListener("touchstart", handleTouchStart);
+      el.removeEventListener("touchmove", handleTouchMove);
+      el.removeEventListener("touchend", handleTouchEnd);
+      el.removeEventListener("pointerdown", handlePointerDown);
+      el.removeEventListener("pointerenter", handlePointerEnter);
+      el.removeEventListener("click", handleClick);
+      if (observer) observer.disconnect();
       if (stateRef.current.animId) {
         cancelAnimationFrame(stateRef.current.animId);
       }
     };
   }, [text]);
 
+  const isHighlight = typeof className === "string" && className.includes("about-highlight");
+
   return (
     <Component
       ref={elRef}
       className={cn(
-        "cursor-pointer select-none relative inline-block whitespace-nowrap overflow-hidden align-bottom transition-colors duration-200",
+        "cursor-pointer select-none relative align-bottom transition-colors duration-200",
+        isHighlight ? "inline" : "inline-block whitespace-nowrap overflow-hidden",
         className
       )}
       style={{

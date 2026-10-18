@@ -109,6 +109,21 @@ export default function Preloader({ onComplete }) {
         <h1 className="crowd-preloader-title">
           PORTFOLIO
         </h1>
+        {/* Mobile: Enter Portfolio button positioned directly below PORTFOLIO text */}
+        <div className="crowd-preloader-mobile-btn-wrapper">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleFinish();
+            }}
+            className="crowd-preloader-enter-btn-top crowd-preloader-enter-btn-mobile"
+            aria-label="Enter portfolio"
+          >
+            <span>Enter Portfolio</span>
+            <ArrowRight size={14} className="crowd-preloader-arrow" />
+          </button>
+        </div>
       </div>
 
       {/* Foreground Layer: Walking Crowd Animation */}

@@ -1456,6 +1456,16 @@
     width: 100%;
     max-width: 100vw;
     overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .portfolio-app-layout::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   .portfolio-split-layout {
@@ -1475,6 +1485,8 @@
     transform: translateX(-100%);
     box-shadow: 12px 0 32px rgba(0, 0, 0, 0.6);
     z-index: 55;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
 
   .portfolio-sidebar.open {
@@ -1484,8 +1496,16 @@
   .sidebar-content {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
     padding: 2.2rem 1.25rem 1.5rem;
     height: 100%;
+  }
+
+  .sidebar-content::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 
   .profile-card {
@@ -1513,6 +1533,16 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     z-index: 52;
+    animation: fadeInBackdrop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeInBackdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .mobile-close-btn {
@@ -1530,6 +1560,12 @@
     border-radius: 8px;
     cursor: pointer;
     z-index: 10;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .mobile-close-btn:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.18);
   }
 
   .portfolio-main-area {
@@ -1551,6 +1587,13 @@
     justify-content: flex-start;
     padding-top: 1.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  #contact,
+  .portfolio-contact-fullscreen {
+    min-height: 84dvh !important;
+    height: 84dvh !important;
+    max-height: 84dvh !important;
   }
 
   .hero-container {
@@ -1642,6 +1685,13 @@
     min-height: calc(100dvh - 56px);
     padding-top: 1rem;
     padding-bottom: 2rem;
+  }
+
+  #contact,
+  .portfolio-contact-fullscreen {
+    min-height: 84dvh !important;
+    height: 84dvh !important;
+    max-height: 84dvh !important;
   }
 
   .hero-container {
