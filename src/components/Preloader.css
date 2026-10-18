@@ -143,7 +143,7 @@
   }
 
   .crowd-preloader-center {
-    top: calc(9% + 15px);
+    top: calc(9% + 135px);
     padding: 0 0.5rem;
   }
 
@@ -173,7 +173,7 @@
 
 @media (max-width: 640px) {
   .crowd-preloader-center {
-    top: calc(8% + 15px);
+    top: calc(8% + 135px);
     padding: 0 0.5rem;
   }
 
@@ -185,7 +185,7 @@
 
 @media (max-width: 380px) {
   .crowd-preloader-center {
-    top: calc(6% + 10px);
+    top: calc(6% + 130px);
   }
 
   .crowd-preloader-title {
