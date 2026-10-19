@@ -1589,6 +1589,11 @@
     padding-bottom: 2.5rem;
   }
 
+  .job-slider-section {
+    padding-left: 20px !important;
+    padding-right: 0 !important;
+  }
+
   #contact,
   .portfolio-contact-fullscreen {
     min-height: 84dvh !important;
@@ -1685,6 +1690,11 @@
     min-height: calc(100dvh - 56px);
     padding-top: 1rem;
     padding-bottom: 2rem;
+  }
+
+  .job-slider-section {
+    padding-left: 20px !important;
+    padding-right: 0 !important;
   }
 
   #contact,

@@ -58,15 +58,10 @@ export default function JobSlider() {
 
   return (
     <section
-      className="
-      w-full min-h-[calc(100dvh-56px)] sm:min-h-screen flex flex-col items-center justify-center
-      bg-[#FDF8F3] dark:bg-[#0A0A0C]
-      py-8 sm:py-16 px-4 sm:px-12 lg:px-20
-      relative transition-colors box-border my-0 border-0 rounded-none overflow-hidden
-      "
+      className="job-slider-section w-full min-h-[calc(100dvh-56px)] sm:min-h-screen flex flex-col items-center justify-center bg-[#FDF8F3] dark:bg-[#0A0A0C] py-8 sm:py-16 pl-[20px] pr-0 sm:px-12 lg:px-20 relative transition-colors box-border my-0 border-0 rounded-none overflow-hidden"
     >
       {/* Top Header Row */}
-      <div className="w-full max-w-4xl flex items-start sm:items-center justify-between gap-3 mb-3 sm:mb-8 z-30 px-1 sm:px-0">
+      <div className="w-full max-w-4xl flex items-start sm:items-center justify-between gap-3 mb-3 sm:mb-8 z-30 sm:px-0">
         <div className="flex-1 min-w-0">
           <span className="inline-block text-[10px] sm:text-xs font-mono uppercase tracking-wider text-[#FACC15] font-semibold mb-0.5">
             Portfolio Showcase
@@ -78,7 +73,7 @@ export default function JobSlider() {
             Selected full-stack web applications &amp; telemetry tools
           </p>
         </div>
-        <span className="inline-flex items-center px-3 py-1 sm:px-5 sm:py-2 rounded-full bg-white dark:bg-[#18181C] text-gray-900 dark:text-[#FACC15] font-mono font-bold text-xs sm:text-base border border-gray-200/80 dark:border-[#FACC15]/30 shadow-sm flex-shrink-0 mt-1 sm:mt-0">
+        <span className="inline-flex items-center px-3 py-1 sm:px-5 sm:py-2 rounded-full bg-white dark:bg-[#18181C] text-gray-900 dark:text-[#FACC15] font-mono font-bold text-xs sm:text-base border border-gray-200/80 dark:border-[#FACC15]/30 shadow-sm flex-shrink-0 mt-1 sm:mt-0 mr-[5px] sm:mr-0">
           0{currentSlide + 1} / 0{projects.length}
         </span>
       </div>
@@ -118,7 +113,7 @@ export default function JobSlider() {
         </Button>
 
         {/* Project Content Container */}
-        <div className="overflow-hidden w-full px-1 sm:px-16 py-1 sm:py-2 touch-pan-y">
+        <div className="overflow-hidden w-full sm:px-16 py-1 sm:py-2 touch-pan-y">
           <div
             className="flex transition-transform duration-500 ease-in-out will-change-transform"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -126,7 +121,7 @@ export default function JobSlider() {
             {projects.map((project, idx) => (
               <div
                 key={idx}
-                className="w-full shrink-0 basis-full flex flex-col items-start text-left space-y-2.5 sm:space-y-4 px-1 sm:px-0 box-border"
+                className="w-full shrink-0 basis-full flex flex-col items-start text-left space-y-2.5 sm:space-y-4 sm:px-0 box-border"
               >
                 {/* Category Tag */}
                 {project.tag && (
@@ -183,7 +178,7 @@ export default function JobSlider() {
         </div>
 
         {/* Mobile-only Navigation Controls (Dots + Prev/Next buttons) */}
-        <div className="flex sm:hidden items-center justify-between w-full pt-4 mt-2 px-1">
+        <div className="flex sm:hidden items-center justify-between w-full pt-4 mt-2 pr-0">
           {/* Slide Dots Indicator */}
           <div className="flex items-center gap-1.5">
             {projects.map((_, i) => (
@@ -201,7 +196,7 @@ export default function JobSlider() {
           </div>
 
           {/* Prev / Next Pill Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mr-[5px]">
             <button
               onClick={handlePrev}
               className="w-9 h-9 rounded-full bg-white dark:bg-[#18181C] border border-gray-200 dark:border-neutral-700/80 flex items-center justify-center text-gray-800 dark:text-[#FACC15] shadow-sm active:scale-90 transition-transform"
